@@ -12,7 +12,8 @@ const byte sensorMag = 12;
 const int D_CILINDRO = 160;
 const int PPR = 2500;
 const float CIRCUNF_CILINDRO = PI * D_CILINDRO;
-const float FATOR_CORRECAO = 0.891;
+const float FATOR_CONTATO = 0.48; // No cilindo de cima nao tem 100% de contato com o papel e sim 48%
+const float FATOR_CORRECAO = 0.891 * (1/FATOR_CONTATO); // Fator de correção para o diâmetro real da bobina pq na maquina tava dando diferença 
 
 int voltas = 0;
 long comprimentoFio = 0;
@@ -21,7 +22,7 @@ bool sentidoHorario = true;
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Sistema de Medição de Diâmetro de Bobina");
+  Serial.println("Sistema de Medição - Máquina de Papelão");
   Serial.println("----------------------------------------");
 
   pinMode(pinA, INPUT);
@@ -59,16 +60,7 @@ void loop() {
     }
 
     Serial.println("----------------------------------------");
-    Serial.print("Sentido: ");
-    Serial.println(sentidoHorario ? "Enrolando" : "Desenrolando");
-    Serial.print("Volta número: ");
-    Serial.println(voltas);
-    Serial.print("Pulsos do Encoder: ");
-    Serial.println(contadorEncoder);
-    Serial.print("Comprimento do fio: ");
-    Serial.print(comprimentoFio);
-    Serial.println(" mm");
-    Serial.print("Diâmetro da bobina: ");
+    Serial.print("Diâmetro atual da bobina: ");
     Serial.print(diametroBobina);
     Serial.println(" mm");
     Serial.println("----------------------------------------");

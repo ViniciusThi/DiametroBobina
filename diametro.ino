@@ -25,11 +25,22 @@ void setup() {
   Serial.println("Sistema de Medição - Máquina de Papelão");
   Serial.println("----------------------------------------");
 
-  pinMode(pinA, INPUT);
-  pinMode(pinB, INPUT);
+  // Configuração dos pinos para máxima performance
+  analogReadResolution(12);  
+  analogWriteResolution(16); 
+  
+ 
+  pinMode(pinA, INPUT_PULLUP);
+  pinMode(pinB, INPUT_PULLUP);
   pinMode(sensorMag, INPUT_PULLUP);
 
+  
+  NVIC_SetPriority(digitalPinToInterrupt(pinA), 0);
   attachInterrupt(digitalPinToInterrupt(pinA), lerEncoder, RISING);
+  
+  
+  PIOA->PIO_IFER = (1 << pinA) | (1 << pinB);
+  PIOB->PIO_IFER = (1 << sensorMag);
 }
 
 void loop() {
@@ -70,7 +81,8 @@ void loop() {
 }
 
 void lerEncoder() {
-  if (digitalRead(pinB)) {
+  // Leitura direta dos registradores para máxima velocidade
+  if (PIOA->PIO_PDSR & (1 << pinB)) {
     contadorEncoder++;
   } else {
     contadorEncoder--;

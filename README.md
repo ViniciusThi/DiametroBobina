@@ -50,6 +50,7 @@ Onde:
 - `voltas` é o número de voltas contadas pelo sensor magnético
 - `π` é a constante PI (3.14159...)
 - `FATOR_CORRECAO` é 0.891 (calibrado para maior precisão)
+- `FATOR_CONTATO` é 0.48 (48% de contato com o cilindro)
 
 ## Detecção de Sentido
 
@@ -75,21 +76,4 @@ O sistema detecta automaticamente se a bobina está sendo enrolada ou desenrolad
 3. **Robustez**:
    - Usa interrupções para não perder pulsos do encoder
    - Tratamento de debounce no sensor magnético
-   - Proteção contra valores negativos
-
-## Por que Usar Este Sistema?
-
-1. **Precisão**: O uso do encoder de 2500 PPR oferece alta resolução na medição
-2. **Tempo Real**: Medições instantâneas durante o processo
-3. **Bidirecional**: Funciona tanto no enrolamento quanto no desenrolamento
-4. **Não-Invasivo**: Não interfere no processo de bobinamento
-5. **Baixo Custo**: Utiliza componentes comuns e acessíveis
-6. **Manutenção Simples**: Poucos componentes móveis
-7. **Adaptável**: Pode ser calibrado para diferentes diâmetros de cilindro
-
-## Limitações e Considerações
-
-1. O sistema assume que não há escorregamento entre o fio e o cilindro superior
-2. A precisão depende da correta instalação do sensor magnético
-3. O fator de correção pode precisar de ajustes para diferentes tipos de bobinas
-4. É importante manter o encoder limpo e bem fixado para evitar erros de leitura 
+   - Proteção contra valores negativos 
